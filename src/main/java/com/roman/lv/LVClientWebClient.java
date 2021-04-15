@@ -24,6 +24,13 @@ import java.net.URL;
 public class LVClientWebClient {
     private static final Logger log = LoggerFactory.getLogger(LVClientWebClient.class);
 
+    public boolean isWindowsOperatingSystem() {
+        String os = System.getProperty("os.name");
+        System.out.println("Using System Property: " + os);
+            return os.contains("Windows");
+
+    }
+
  /*
  Checks if the item is in stock
   */
@@ -31,14 +38,22 @@ public class LVClientWebClient {
 
         String response ="Not Available";
             ChromeOptions chromeOptions = new ChromeOptions();
-            System.setProperty("webdriver.chrome.driver", "target/classes/static/chromedriver.exe"); // Setting system properties of FirefoxDriver
+            if (isWindowsOperatingSystem()) {
+                System.out.println("this is WIndows OS for sure");
+                System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
+            }
+            else
+                ////this will be set for Linux
+            {
 
+            }
             //Proxy proxy = new org.openqa.selenium.Proxy();
             //proxy.setSslProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
             // proxy.setHttpProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
             // chromeOptions.setCapability("proxy", proxy);
             WebDriver driver = new ChromeDriver(chromeOptions);
             try{
+            System.out.println("URL" + url);
             driver.get(url);
             By by = new By.ByClassName("lv-stock-indicator");
             WebElement webElement = driver.findElement(by);

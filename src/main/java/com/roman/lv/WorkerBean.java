@@ -41,20 +41,29 @@ public class WorkerBean {
     public synchronized String  checkForNewArrivals() {
 
         System.out.println("isnide check");
+        /*
+        items are of the structure:
+        https://uk.louisvuitton.com/eng-gb/products/loya-sunglasses-nvprod2810055v#Z1457W:shtek@yahoo.com
+         */
         Set<String> items = loadResourceConfig.getItems();
 
         Set<String> remove = new HashSet<>();
+
         //fir each item in the items do
         items.stream().forEach(s->{
-
-            String xml = webClient.inStock(s);
+            String [] urlAndemail = s.split("DIVIDER");
+            String url = urlAndemail[0];
+            System.out.println("url " + url);
+            String emailAddress = urlAndemail[1];
+            System.out.println(emailAddress + "email");
+            String xml = webClient.inStock(url);
 
             if (inStock(xml))
             {
               //not using counter but remove the item from scanning
               //  if(counter.getCounter()==false)
                     remove.add(s);
-                    emailService.sendSimpleMessage(s);
+                    emailService.sendSimpleMessage(url, emailAddress);
               //not using counter but remove item from scanning
               //  counter.setCounter(true);
             }
@@ -69,9 +78,13 @@ public class WorkerBean {
 
         return   "checked for items";
         }
+     /*
+     Available - in UK
+     In stock -  in USA
+      */
      private boolean inStock(String xml){
         System.out.println("-->" + xml + "---");
-        return  xml.equals("Available");
+        return  (xml.equals("Available") || (xml.equals("In stock"))) ;
 
      }
 
