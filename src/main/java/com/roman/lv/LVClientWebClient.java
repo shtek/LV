@@ -43,7 +43,8 @@ public class LVClientWebClient {
                 System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
             }
             else
-                ////this will be set for Linux
+                System.out.println("this is Linux OS for sure");
+                System.setProperty("webdriver.chrome.driver", "target/classes/static/Linux/chromedriver");
             {
 
             }
