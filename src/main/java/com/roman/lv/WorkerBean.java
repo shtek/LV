@@ -51,7 +51,8 @@ public class WorkerBean {
         Set<String> items = loadResourceConfig.getItems();
 
         Set<String> remove = new HashSet<>();
-
+        //start vpn before all scans
+        startVPN();
         //fir each item in the items do
         items.stream().forEach(s->{
             String [] urlAndemail = s.split("DIVIDER");
@@ -59,9 +60,9 @@ public class WorkerBean {
             System.out.println("url " + url);
             String emailAddress = urlAndemail[1];
             System.out.println(emailAddress + "email");
-            startVPN();
+    //        startVPN();
             String xml = webClient.inStock(url);
-            stopVPN();
+        //    stopVPN();
             if (inStock(xml))
             {
               //not using counter but remove the item from scanning
@@ -72,6 +73,8 @@ public class WorkerBean {
               //  counter.setCounter(true);
             }
         });
+        //stop vpn after one pass
+        stopVPN();
         //after one pass , remove the items from scan list,
         //so i dont send the same email over and over
 
