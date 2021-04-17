@@ -10,9 +10,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -40,12 +42,14 @@ public class LVClientWebClient {
             ChromeOptions chromeOptions = new ChromeOptions();
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
-                System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
+
+
+                System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver.exe");
             }
             else
             {
                 System.out.println("this is Linux OS for sure");
-                System.setProperty("webdriver.chrome.driver", "target/classes/static/Linux/chromedriver");
+                System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver");
 
 
             }
