@@ -33,13 +33,13 @@ class LVClientWebClientTest {
     ProxyPopulator proxyPopulator;
   @Autowired
     FreeProxySelector  proxySelector ;
-       //@Test
+       @Test
         public void getElements() throws Exception {
       //      proxyPopulator.populateProxies();
       ChromeOptions chromeOptions = new ChromeOptions();
      //      System.setProperty("http.proxyHost", "178.20.137.178");
      //      System.setProperty("http.proxyPort", "43980");
-      System.setProperty("webdriver.chrome.driver","target/classes/static/chromedriver.exe"); // Setting system properties of FirefoxDriver
+      System.setProperty("webdriver.chrome.driver","target/classes/static/Windows/chromedriver.exe"); // Setting system properties of FirefoxDriver
 
        //     org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
           //  proxy.setHttpProxy(proxySelector.getProxy().address().toString().replace("/",""));
@@ -53,10 +53,13 @@ class LVClientWebClientTest {
 
 
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 1; i++) {
         System.out.println(i);
         Thread.sleep(5000);
         WebDriver driver = new ChromeDriver(chromeOptions);
+        driver.get("chrome://settings/clearBrowserData");
+        Thread.sleep(10000);
+        driver.findElement(By.xpath("//*[@id='clearBrowsingDataConfirm']")).click();
         driver.get("http://uk.louisvuitton.com/eng-gb/products/outdoor-slingbag-k45-nvprod2780009v");
         // driver.get("http://agent1973.herokuapp.com/ip");
         //driver.get("http://www.bbc.com");
