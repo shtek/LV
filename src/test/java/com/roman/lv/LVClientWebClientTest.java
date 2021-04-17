@@ -33,14 +33,16 @@ class LVClientWebClientTest {
     ProxyPopulator proxyPopulator;
   @Autowired
     FreeProxySelector  proxySelector ;
-       @Test
+  //     @Test
         public void getElements() throws Exception {
       //      proxyPopulator.populateProxies();
       ChromeOptions chromeOptions = new ChromeOptions();
      //      System.setProperty("http.proxyHost", "178.20.137.178");
      //      System.setProperty("http.proxyPort", "43980");
-      System.setProperty("webdriver.chrome.driver","target/classes/static/Windows/chromedriver.exe"); // Setting system properties of FirefoxDriver
-
+      System.setProperty("webdriver.chrome.driver","target/classes/static/Linux/chromedriver"); // Setting system properties of FirefoxDriver
+    //  DesiredCapabilities cap = new DesiredCapabilities.chrome();
+     // cap.setCapability("applicationCachEnabled",false);
+    chromeOptions.setCapability("applicationCacheEnabled",false);
        //     org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
           //  proxy.setHttpProxy(proxySelector.getProxy().address().toString().replace("/",""));
 
@@ -49,19 +51,20 @@ class LVClientWebClientTest {
 
    // chromeOptions.addArguments("user-agent=Mozilla/5.0 (Linux; Android 10; SM-A102U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36");
 
-        //chromeOptions.addArguments("--headless", "--window-size=1920,1200");
+     //   chromeOptions.addArguments("--headless", "--window-size=1920,1200");
 
 
 
     for (int i = 0; i < 1; i++) {
         System.out.println(i);
         Thread.sleep(5000);
+
         WebDriver driver = new ChromeDriver(chromeOptions);
-        driver.get("chrome://settings/clearBrowserData");
-        Thread.sleep(10000);
-        driver.findElement(By.xpath("//*[@id='clearBrowsingDataConfirm']")).click();
+        driver.manage().deleteAllCookies();
+      //  driver.get("chrome://settings/clearBrowserData");
+
         driver.get("http://uk.louisvuitton.com/eng-gb/products/outdoor-slingbag-k45-nvprod2780009v");
-        // driver.get("http://agent1973.herokuapp.com/ip");
+       //  driver.get("http://agent1973.herokuapp.com/ip");
         //driver.get("http://www.bbc.com");
 //      String  source =driver.getPageSource();
   //    System.out.print(source);

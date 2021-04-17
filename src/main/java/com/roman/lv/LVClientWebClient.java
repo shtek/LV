@@ -42,6 +42,9 @@ public class LVClientWebClient {
         String response ="Not Available";
 
                     ChromeOptions chromeOptions = new ChromeOptions();
+                    //disable chromecache
+        chromeOptions.setCapability("applicationCacheEnabled",false);
+
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
 
@@ -60,6 +63,7 @@ public class LVClientWebClient {
             // proxy.setHttpProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
             // chromeOptions.setCapability("proxy", proxy);
           WebDriver driver = new ChromeDriver(chromeOptions);
+            driver.manage().deleteAllCookies();
            // WebDriver driver = new FirefoxDriver();
             try{
             System.out.println("URL" + url);

@@ -97,7 +97,7 @@ public class WorkerBean {
 
     private void startVPN(){
         try {
-            Process process = Runtime.getRuntime().exec("protonvpn-cli c -f");
+            Process process = Runtime.getRuntime().exec("protonvpn-cli c -r");
             printResults(process);
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ public class ScheduledTask {
      /*
      Keep looking for items .  Until
       */
-  //   @Scheduled(fixedRate = 5000)
+     @Scheduled(fixedRate = 5000)
      public void doWork() throws Exception {
 //will not use counter for now , but will remove the item from scan once found
          // will need to figure out how to put it back for scanning
