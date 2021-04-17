@@ -11,8 +11,13 @@ public class CmdTest {
   //  @Test
     public void cmdT() throws IOException {
        // Process process = Runtime.getRuntime().exec("ping www.stackabuse.com");
-        Process process = Runtime.getRuntime()
-                .exec("runas /profile /user:Roman \"openvpn --config nl-free-02.protonvpn.com.udp.ovpn", null, new File("C:\\Users\\Roman\\OpenVPN\\config\\"));
+      //  Process process = Runtime.getRuntime()
+      //          .exec("runas /profile /user:Roman \"openvpn --config nl-free-02.protonvpn.com.udp.ovpn", null, new File("C:\\Users\\Roman\\OpenVPN\\config\\"));
+
+       // Process process = Runtime.getRuntime().exec("pwd");
+
+        Process process = Runtime.getRuntime().exec("protonvpn-cli c -f");
+
         printResults(process);
     }
     public static void printResults(Process process) throws IOException {

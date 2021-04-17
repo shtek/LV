@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,8 +59,9 @@ public class WorkerBean {
             System.out.println("url " + url);
             String emailAddress = urlAndemail[1];
             System.out.println(emailAddress + "email");
+            startVPN();
             String xml = webClient.inStock(url);
-
+            stopVPN();
             if (inStock(xml))
             {
               //not using counter but remove the item from scanning
@@ -88,6 +92,31 @@ public class WorkerBean {
 
      }
 
+    private void startVPN(){
+        try {
+            Process process = Runtime.getRuntime().exec("protonvpn-cli c -f");
+            printResults(process);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void stopVPN(){
+        try {
+            Process process = Runtime.getRuntime().exec("protonvpn-cli disconnect");
+            printResults(process);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void printResults(Process process) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
 
 
 

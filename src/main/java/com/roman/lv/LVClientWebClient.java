@@ -41,26 +41,26 @@ public class LVClientWebClient {
 
         String response ="Not Available";
 
-        //            ChromeOptions chromeOptions = new ChromeOptions();
+                    ChromeOptions chromeOptions = new ChromeOptions();
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
 
-                System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver.exe"); // Setting system properties of FirefoxDriver
-               // System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver.exe");
+              //  System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver.exe"); // Setting system properties of FirefoxDriver
+                System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver.exe");
             }
             else
             {
                 System.out.println("this is Linux OS for sure");
-                //System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver");
-                System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver");
+               System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver");
+               // System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver");
 
             }
             //Proxy proxy = new org.openqa.selenium.Proxy();
             //proxy.setSslProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
             // proxy.setHttpProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
             // chromeOptions.setCapability("proxy", proxy);
-         //   WebDriver driver = new ChromeDriver(chromeOptions);
-            WebDriver driver = new FirefoxDriver();
+          WebDriver driver = new ChromeDriver(chromeOptions);
+           // WebDriver driver = new FirefoxDriver();
             try{
             System.out.println("URL" + url);
             driver.get(url);
