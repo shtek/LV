@@ -53,7 +53,7 @@ public class LVClientWebClient {
             else
             {
                 System.out.println("this is Linux OS for sure");
-               System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver");
+               System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
 
             }
           WebDriver driver = new ChromeDriver(chromeOptions);

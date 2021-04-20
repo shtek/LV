@@ -52,7 +52,7 @@ public class WorkerBean {
 
         Set<String> remove = new HashSet<>();
         //start vpn before all scans
-        startVPN();
+      //  startVPN();
         //fir each item in the items do
         items.stream().forEach(s->{
             String [] urlAndemail = s.split("DIVIDER");
@@ -74,7 +74,7 @@ public class WorkerBean {
             }
         });
         //stop vpn after one pass
-        stopVPN();
+   //     stopVPN();
         //after one pass , remove the items from scan list,
         //so i dont send the same email over and over
 
