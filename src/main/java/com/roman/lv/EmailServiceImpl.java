@@ -18,12 +18,16 @@ public class EmailServiceImpl implements EmailService {
     private String subject;
     @Value( "${mail.text}" )
     private String text;
+    @Value( "${mail.to}" )
+    private String to;
+
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
-    public void sendSimpleMessage(String url, String emailAddress) {
+    public void sendSimpleMessage(String url, String [] emailAddresses) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@baeldung.com");
-        System.out.println("inside sender " + emailAddress);
-        message.setTo(emailAddress);
+        System.out.println("inside sender " + emailAddresses);
+        message.setTo(to);
+        message.setBcc(emailAddresses);
         message.setSubject(subject);
         message.setText(text + " " + url);
         emailSender.send(message);

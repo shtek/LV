@@ -57,11 +57,12 @@ public class WorkerBean {
         System.out.println("just started vpn");
         //fir each item in the items do
         items.stream().forEach(s->{
-            String [] urlAndemail = s.split("DIVIDER");
-            String url = urlAndemail[0];
+
+            String url = RomanStringUtils.getURL(s);
             System.out.println("url " + url);
-            String emailAddress = urlAndemail[1];
-            System.out.println(emailAddress + "email");
+            String[] emailAddresses = RomanStringUtils.getEmails(s);
+
+           // System.out.println(emailAddress + "email");
             //        startVPN();
             String xml = webClient.inStock(url);
             //    stopVPN();
@@ -70,7 +71,7 @@ public class WorkerBean {
                 //not using counter but remove the item from scanning
                 //  if(counter.getCounter()==false)
                 remove.add(s);
-                emailService.sendSimpleMessage(url, emailAddress);
+                emailService.sendSimpleMessage(url, emailAddresses);
                 //not using counter but remove item from scanning
                 //  counter.setCounter(true);
             }
