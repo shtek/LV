@@ -43,7 +43,7 @@ public class WorkerBean {
    */
     public synchronized String  checkForNewArrivals() {
 
-        System.out.println("isnide check");
+        System.out.println("isnide check for new arraivals");
         /*
         items are of the structure:
         https://uk.louisvuitton.com/eng-gb/products/loya-sunglasses-nvprod2810055v#Z1457W:shtek@yahoo.com
@@ -52,7 +52,9 @@ public class WorkerBean {
 
         Set<String> remove = new HashSet<>();
         //start vpn before all scans
-      //  startVPN();
+        System.out.println("starting vpn");
+        startVPN();
+        System.out.println("just started vpn");
         //fir each item in the items do
         items.stream().forEach(s->{
             String [] urlAndemail = s.split("DIVIDER");
@@ -74,7 +76,9 @@ public class WorkerBean {
             }
         });
         //stop vpn after one pass
-   //     stopVPN();
+        System.out.println("stopping vpn");
+        stopVPN();
+        System.out.println("just stopped VPN");
         //after one pass , remove the items from scan list,
         //so i dont send the same email over and over
 
@@ -94,7 +98,10 @@ public class WorkerBean {
         return  (xml.equals("Available") || (xml.equals("In stock"))) ;
 
     }
-
+/*
+perhaps I can have a wait of some kind, and if I am not able to connect after few seconds , then reattempt again
+i think sometimes connection is not good
+ */
     private void startVPN(){
         try {
             Process process = Runtime.getRuntime().exec("protonvpn-cli c -r");

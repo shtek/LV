@@ -38,7 +38,7 @@ public class LVClientWebClient {
  Checks if the item is in stock
   */
     public String inStock(String url) {
-
+        System.out.println("started checking " + url);
         String response ="Not Available";
 
                     ChromeOptions chromeOptions = new ChromeOptions();
