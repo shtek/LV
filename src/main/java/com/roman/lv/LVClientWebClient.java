@@ -48,30 +48,23 @@ public class LVClientWebClient {
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
 
-              //  System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver.exe"); // Setting system properties of FirefoxDriver
                 System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver.exe");
             }
             else
             {
                 System.out.println("this is Linux OS for sure");
                System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver");
-               // System.setProperty("webdriver.gecko.driver","browserDrivers/geckodriver");
 
             }
-            //Proxy proxy = new org.openqa.selenium.Proxy();
-            //proxy.setSslProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
-            // proxy.setHttpProxy("shtek:YvJ9b@uTV9AZ@Xs@us-wa.proxymesh.com:31280");
-            // chromeOptions.setCapability("proxy", proxy);
           WebDriver driver = new ChromeDriver(chromeOptions);
             driver.manage().deleteAllCookies();
-           // WebDriver driver = new FirefoxDriver();
             try{
             System.out.println("URL" + url);
             driver.get(url);
             By by = new By.ByClassName("lv-stock-indicator");
             WebElement webElement = driver.findElement(by);
             response = webElement.getText();
-          //  driver.close();
+
             driver.quit();
         }
         catch(Exception e){

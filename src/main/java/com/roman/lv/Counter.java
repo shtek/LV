@@ -5,6 +5,7 @@ I am on dev
 import org.springframework.stereotype.Service;
 
 @Service
+@Deprecated
 public class Counter {
     private  boolean counter = false;
     public  synchronized   boolean  getCounter() {

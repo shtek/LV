@@ -38,9 +38,9 @@ public class LoadResourceConfig {
 
         items = new HashSet<String>(Arrays.asList(lines));
 
-       }
+    }
     public Set<String> getItems(){
-          return items;
+        return items;
     }
     public void removeItems(Set<String> set){
         items.removeAll(set);

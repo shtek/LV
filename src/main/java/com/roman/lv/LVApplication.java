@@ -8,9 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class LVApplication {
-@Autowired
-WorkerBean workerBean;
-//Driver for chrome is configured in web properties
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(LVApplication.class, args);

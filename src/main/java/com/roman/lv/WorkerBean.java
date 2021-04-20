@@ -35,12 +35,12 @@ public class WorkerBean {
 
 
 
-  /*
-  1. received new items
-  2. filter out only branded items
-  3. Add items to storage
-  4. if any new items were added to storage then alert
- */
+    /*
+    1. received new items
+    2. filter out only branded items
+    3. Add items to storage
+    4. if any new items were added to storage then alert
+   */
     public synchronized String  checkForNewArrivals() {
 
         System.out.println("isnide check");
@@ -60,17 +60,17 @@ public class WorkerBean {
             System.out.println("url " + url);
             String emailAddress = urlAndemail[1];
             System.out.println(emailAddress + "email");
-    //        startVPN();
+            //        startVPN();
             String xml = webClient.inStock(url);
-        //    stopVPN();
+            //    stopVPN();
             if (inStock(xml))
             {
-              //not using counter but remove the item from scanning
-              //  if(counter.getCounter()==false)
-                    remove.add(s);
-                    emailService.sendSimpleMessage(url, emailAddress);
-              //not using counter but remove item from scanning
-              //  counter.setCounter(true);
+                //not using counter but remove the item from scanning
+                //  if(counter.getCounter()==false)
+                remove.add(s);
+                emailService.sendSimpleMessage(url, emailAddress);
+                //not using counter but remove item from scanning
+                //  counter.setCounter(true);
             }
         });
         //stop vpn after one pass
@@ -80,20 +80,20 @@ public class WorkerBean {
 
         //come up with better name for the class
         if( remove != null)
-          loadResourceConfig.removeItems(remove);
+            loadResourceConfig.removeItems(remove);
 
 
         return   "checked for items";
-        }
-     /*
-     Available - in UK
-     In stock -  in USA
-      */
-     private boolean inStock(String xml){
+    }
+    /*
+    Available - in UK
+    In stock -  in USA
+     */
+    private boolean inStock(String xml){
         System.out.println("-->" + xml + "---");
         return  (xml.equals("Available") || (xml.equals("In stock"))) ;
 
-     }
+    }
 
     private void startVPN(){
         try {
