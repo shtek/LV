@@ -55,7 +55,7 @@ public class WorkerBean {
         startVPN();
         System.out.println("just started vpn");
         //fir each item in the items do
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
         List<StockChecker> checkers = new ArrayList<>();
 
         items.stream().forEach(s->{
