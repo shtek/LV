@@ -41,23 +41,23 @@ public class LVClientWebClient {
         System.out.println("started checking " + url);
         String response ="Not Available";
 
-                  //  ChromeOptions chromeOptions = new ChromeOptions();
+                    ChromeOptions chromeOptions = new ChromeOptions();
                     //disable chromecache
-                  // chromeOptions.setCapability("applicationCacheEnabled",false);
+                   chromeOptions.setCapability("applicationCacheEnabled",false);
 
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
-                System.setProperty("webdriver.gecko.driver", "target/classes/static/Windows/geckodriver.exe");
-                //System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
+               // System.setProperty("webdriver.gecko.driver", "target/classes/static/Windows/geckodriver.exe");
+                System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
             }
             else
             {
                 System.out.println("this is Linux OS for sure");
-              // System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
-                System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
+              System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
+               // System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
             }
-         // WebDriver driver = new ChromeDriver(chromeOptions);
-        WebDriver driver = new FirefoxDriver();
+          WebDriver driver = new ChromeDriver(chromeOptions);
+          //WebDriver driver = new FirefoxDriver();
 
         driver.manage().deleteAllCookies();
             try{
