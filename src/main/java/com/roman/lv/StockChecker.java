@@ -16,12 +16,14 @@ public class StockChecker implements Callable<List<String>> {
         this.urlwithemail=urlwithemail;
     }
     public List<String>  call() {
-        String [] urlAndemail = urlwithemail.split("DIVIDER");
-        String url = urlAndemail[0];
+        String url = RomanStringUtils.getURL(urlwithemail);
         System.out.println("url " + url);
-        String emailAddress = urlAndemail[1];
-        System.out.println(emailAddress + "email");
+        String[] emailAddresses = RomanStringUtils.getEmails(urlwithemail);
+        String xml = webClient.inStock(url);
+        List<String> res = new ArrayList<>();
 
-        return new ArrayList<>();
+        res.add(xml);
+        res.add(urlwithemail);
+        return  res;
     }
 }

@@ -43,12 +43,12 @@ public class LVClientWebClient {
 
                     ChromeOptions chromeOptions = new ChromeOptions();
                     //disable chromecache
-        chromeOptions.setCapability("applicationCacheEnabled",false);
+      //  chromeOptions.setCapability("applicationCacheEnabled",false);
 
             if (isWindowsOperatingSystem()) {
                 System.out.println("this is WIndows OS for sure");
 
-                System.setProperty("webdriver.chrome.driver", "browserDrivers/chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "target/classes/static/Windows/chromedriver.exe");
             }
             else
             {
@@ -57,7 +57,7 @@ public class LVClientWebClient {
 
             }
           WebDriver driver = new ChromeDriver(chromeOptions);
-            driver.manage().deleteAllCookies();
+      //      driver.manage().deleteAllCookies();
             try{
             System.out.println("URL" + url);
             driver.get(url);

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -33,10 +34,17 @@ public class LoadResourceConfig {
             throw new UncheckedIOException(e);
         }
     }
+    /*
+    Add all items from property file
+     */
     public void setItems() {
         String lines[] = asString().split("\\r?\\n");
+        Set<String>  temp =  new HashSet<String>(Arrays.asList(lines));
+        // items = new HashSet<String>(Arrays.asList(lines));
 
-        items = new HashSet<String>(Arrays.asList(lines));
+        items =ConcurrentHashMap.newKeySet();
+
+        items.addAll(temp);
 
     }
     public Set<String> getItems(){

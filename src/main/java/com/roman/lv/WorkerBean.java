@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 @Service
 public class WorkerBean {
@@ -41,7 +39,7 @@ public class WorkerBean {
     3. Add items to storage
     4. if any new items were added to storage then alert
    */
-    public synchronized String  checkForNewArrivals() {
+    public synchronized String  checkForNewArrivals() throws InterruptedException {
 
         System.out.println("isnide check for new arraivals");
         /*
@@ -49,32 +47,44 @@ public class WorkerBean {
         https://uk.louisvuitton.com/eng-gb/products/loya-sunglasses-nvprod2810055v#Z1457W:shtek@yahoo.com
          */
         Set<String> items = loadResourceConfig.getItems();
+        //make it concurrent
 
-        Set<String> remove = new HashSet<>();
+        Set<String> remove =  ConcurrentHashMap.newKeySet();
         //start vpn before all scans
         System.out.println("starting vpn");
         startVPN();
         System.out.println("just started vpn");
         //fir each item in the items do
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        List<StockChecker> checkers = new ArrayList<>();
+
         items.stream().forEach(s->{
+            checkers.add(new StockChecker(webClient,s));
+        });
+        Collection<Future<List<String>>> futures = executorService.invokeAll(checkers);
+        List<List <String>>  list = new ArrayList<>();
+        futures.stream().forEach(f->{
 
-            String url = RomanStringUtils.getURL(s);
-            System.out.println("url " + url);
-            String[] emailAddresses = RomanStringUtils.getEmails(s);
+            try {
+                List<String> l =   f.get();
+                String lineforRemovalURLandEmails = l.get(1);
+                String xml = l.get(0);
+                if (inStock(xml))
+                {
+                    //not using counter but remove the item from scanning
+                    //  if(counter.getCounter()==false)
+                    remove.add(lineforRemovalURLandEmails);
+                    emailService.sendSimpleMessage(RomanStringUtils.getURL(lineforRemovalURLandEmails), RomanStringUtils.getEmails(lineforRemovalURLandEmails));
 
-           // System.out.println(emailAddress + "email");
-            //        startVPN();
-            String xml = webClient.inStock(url);
-            //    stopVPN();
-            if (inStock(xml))
-            {
-                //not using counter but remove the item from scanning
-                //  if(counter.getCounter()==false)
-                remove.add(s);
-                emailService.sendSimpleMessage(url, emailAddresses);
-                //not using counter but remove item from scanning
-                //  counter.setCounter(true);
+                }
+
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
+
         });
         //stop vpn after one pass
         System.out.println("stopping vpn");
