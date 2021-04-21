@@ -54,7 +54,7 @@ public class LVClientWebClient {
             {
                 System.out.println("this is Linux OS for sure");
               // System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
-                System.setProperty("webdriver.chrome.driver", "classes/static/Linux/geckodriver");
+                System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
             }
          // WebDriver driver = new ChromeDriver(chromeOptions);
         WebDriver driver = new FirefoxDriver();
