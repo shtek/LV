@@ -21,6 +21,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class LoadResourceConfig {
     //@Value("classpath:/static/items.txt")
     private Resource resource = new DefaultResourceLoader().getResource("classpath:/static/items.txt");
+
     public Set<String> items;
     public LoadResourceConfig(){
         setItems();
@@ -34,7 +35,7 @@ public class LoadResourceConfig {
             throw new UncheckedIOException(e);
         }
     }
-    /*
+      /*
     Add all items from property file
      */
     public void setItems() {

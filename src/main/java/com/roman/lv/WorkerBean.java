@@ -20,9 +20,8 @@ public class WorkerBean {
     private static final Logger log = LoggerFactory.getLogger(WorkerBean.class);
     @Autowired
     LVClientWebClient webClient;
-
     @Autowired
-    Counter counter;
+     VpnFactory vpnFactory;
 
 
     @Autowired
@@ -52,7 +51,7 @@ public class WorkerBean {
         Set<String> remove =  ConcurrentHashMap.newKeySet();
         //start vpn before all scans
         System.out.println("starting vpn");
-        startVPN();
+        vpnFactory.startVPN();
         System.out.println("just started vpn");
         //fir each item in the items do
         ExecutorService executorService = Executors.newFixedThreadPool(1);
@@ -88,7 +87,7 @@ public class WorkerBean {
         });
         //stop vpn after one pass
         System.out.println("stopping vpn");
-        stopVPN();
+        vpnFactory.stopVPN();
         System.out.println("just stopped VPN");
         //after one pass , remove the items from scan list,
         //so i dont send the same email over and over
@@ -109,35 +108,7 @@ public class WorkerBean {
         return  (xml.equals("Available") || (xml.equals("In stock"))) ;
 
     }
-/*
-perhaps I can have a wait of some kind, and if I am not able to connect after few seconds , then reattempt again
-i think sometimes connection is not good
- */
-    private void startVPN(){
-       try {
-            Process process = Runtime.getRuntime().exec("expressvpn connect");
-            printResults(process);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
-    private void stopVPN(){
-        try {
-            Process process = Runtime.getRuntime().exec("expressvpn disconnect");
-            printResults(process);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    public static void printResults(Process process) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line = "";
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-    }
 
 
 

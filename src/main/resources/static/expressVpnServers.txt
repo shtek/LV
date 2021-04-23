@@ -1,8 +1,5 @@
-ALIAS COUNTRY                     LOCATION                       RECOMMENDED
------ ---------------             ------------------------------ -----------
-smart Smart Location              UK - East London               Y
-inmu1 India (IN)                  India - Mumbai - 1             
-inch                              India - Chennai                
+inmu1 India (IN)                  India - Mumbai - 1
+inch                              India - Chennai
 ukel  United Kingdom (GB)         UK - East London               Y
 uklo                              UK - London                    Y
 ukwe                              UK - Wembley                   
