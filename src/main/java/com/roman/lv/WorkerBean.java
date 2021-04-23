@@ -114,8 +114,8 @@ perhaps I can have a wait of some kind, and if I am not able to connect after fe
 i think sometimes connection is not good
  */
     private void startVPN(){
-        try {
-            Process process = Runtime.getRuntime().exec("protonvpn-cli c -r");
+       try {
+            Process process = Runtime.getRuntime().exec("expressvpn connect");
             printResults(process);
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,7 +124,7 @@ i think sometimes connection is not good
     }
     private void stopVPN(){
         try {
-            Process process = Runtime.getRuntime().exec("protonvpn-cli disconnect");
+            Process process = Runtime.getRuntime().exec("expressvpn disconnect");
             printResults(process);
         } catch (IOException e) {
             e.printStackTrace();
