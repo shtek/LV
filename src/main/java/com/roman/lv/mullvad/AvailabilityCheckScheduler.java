@@ -68,7 +68,7 @@ public class AvailabilityCheckScheduler {
                         driver.get(url);
                         AvailabilityStatus availabilityStatus = checkAvailability(driver);
                         switch (availabilityStatus) {
-                            case ACCESS_DENIED: break;
+                            case ACCESS_DENIED: new SimpleEntry<>(item, AvailabilityStatus.ACCESS_DENIED);
                             case INFORMATION_NOT_AVAILABLE:
                                 driver.navigate().refresh();
                                 return new SimpleEntry<>(item, checkAvailability(driver));
@@ -96,7 +96,7 @@ public class AvailabilityCheckScheduler {
                 .filter(status -> status.getValue().equals(AvailabilityStatus.UNKNOWN)
                         || status.getValue().equals(AvailabilityStatus.INFORMATION_NOT_AVAILABLE)
                         || status.getValue().equals(AvailabilityStatus.ACCESS_DENIED))
-                .forEach(entry -> LOGGER.error("{} Failed for {}", proxy, RomanStringUtils.getURL(entry.getKey())));
+                .forEach(entry -> LOGGER.error("{} Failed for {} with reason: {}", proxy, RomanStringUtils.getURL(entry.getKey()), entry.getValue().name()));
 
         urlToAvailability.entrySet().stream()
                 .filter(status -> status.getValue().equals(AvailabilityStatus.IN_STOCK))
