@@ -10,6 +10,7 @@ public class ScheduledTask {
     @Autowired
     WorkerBean workerBean;
 
+
     @Scheduled(fixedRate = 5000)
      public void doWork() throws Exception {
                  System.out.println("inside the worker");
