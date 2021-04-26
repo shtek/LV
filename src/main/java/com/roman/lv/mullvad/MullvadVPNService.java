@@ -39,7 +39,7 @@ public class MullvadVPNService {
                 String region = matcher.group().split("-")[0];
                 String city = matcher.group().split("-")[1];
                 if (!region.equals(US_PROXY_REGION)) {
-                    proxies.add( region + " " + city + " " + matcher.group());
+                    proxies.add(region + " " + city + " " + matcher.group());
                 }
             }
         }
