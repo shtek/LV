@@ -35,8 +35,8 @@ public class ExpressVpn implements  VpnFactory{
             boolean worked =false ;
             while (!worked) {
 
-                ProcessBuilder builder = new ProcessBuilder("expressvpn connect " + vpnServer);
-                Process process = builder.start();
+                Process process  =  Runtime.getRuntime().exec("expressvpn connect " + vpnServer);
+
                 //       Process process = Runtime.getRuntime().exec("expressvpn connect " + vpnServer );
                 printResults(process);
              worked =    process.waitFor(10, TimeUnit.SECONDS);
@@ -57,8 +57,8 @@ public class ExpressVpn implements  VpnFactory{
         try {
            boolean worked =false ;
            while (!worked) {
-               ProcessBuilder builder = new ProcessBuilder("expressvpn disconnect");
-               Process process = builder.start();
+               Process process  =  Runtime.getRuntime().exec("expressvpn disconnect");
+              // Process process = builder.start();
               worked = process.waitFor(10, TimeUnit.SECONDS);
                // Process process = Runtime.getRuntime().exec("expressvpn disconnect");
                printResults(process);
