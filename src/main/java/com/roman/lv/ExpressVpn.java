@@ -32,8 +32,8 @@ public class ExpressVpn implements  VpnFactory{
      //becasue it is 4 characters identify the vpn
      String vpnServer =  randomStringFromSet().substring(0,4);
         try {
-            ProcessBuilder builder = new ProcessBuilder("expressvpn connect " + vpnServer);
-            Process process = builder.start();
+            Process process =  Runtime.getRuntime().exec("expressvpn connect " + vpnServer);
+           // Process process = builder.start();
              //       Process process = Runtime.getRuntime().exec("expressvpn connect " + vpnServer );
             printResults(process);
             process.waitFor(10, TimeUnit.SECONDS);
@@ -52,8 +52,8 @@ public class ExpressVpn implements  VpnFactory{
     @Override
     public void stopVPN() {
         try {
-            ProcessBuilder builder = new ProcessBuilder("expressvpn disconnect");
-            Process process = builder.start();
+            Process process = Runtime.getRuntime().exec("expressvpn disconnect");
+           // Process process = builder.start();
             process.waitFor(10, TimeUnit.SECONDS);
            // Process process = Runtime.getRuntime().exec("expressvpn disconnect");
             printResults(process);
