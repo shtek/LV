@@ -34,12 +34,17 @@ public class ExpressVpn implements  VpnFactory{
         try {
             boolean worked =false ;
             while (!worked) {
-
+                System.out.println("inside vpn connection loop" + vpnServer);
                 Process process  =  Runtime.getRuntime().exec("expressvpn connect " + vpnServer);
 
                 //       Process process = Runtime.getRuntime().exec("expressvpn connect " + vpnServer );
                 printResults(process);
+             System.out.print("prewaiting");
              worked =    process.waitFor(10, TimeUnit.SECONDS);
+             System.out.println("after waiting" + worked);
+             //if failed will connect to usny
+             vpnServer = "usny";
+
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
