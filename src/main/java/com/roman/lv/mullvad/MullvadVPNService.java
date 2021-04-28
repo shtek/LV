@@ -18,6 +18,7 @@ public class MullvadVPNService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MullvadVPNService.class);
     private static final String US_PROXY_REGION = "us";
+    private static final List<String> BANNED_REGION = List.of("us", "ca", "au");
     private static final int MAX_RETRIES = 10;
 
     private final List<String> proxies = new ArrayList<>();
@@ -38,12 +39,12 @@ public class MullvadVPNService {
             if(matcher.find()) {
                 String region = matcher.group().split("-")[0];
                 String city = matcher.group().split("-")[1];
-                if (!region.equals(US_PROXY_REGION)) {
+                if (!BANNED_REGION.contains(region)) {
                     proxies.add(region + " " + city + " " + matcher.group());
                 }
             }
         }
-        LOGGER.info("Proxy list loaded with {} proxy", proxies.size());
+        LOGGER.info("Proxy list loaded with {} servers", proxies.size());
     }
 
     public String switchProxy() throws IOException, InterruptedException {

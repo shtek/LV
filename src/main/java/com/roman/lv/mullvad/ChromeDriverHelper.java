@@ -1,6 +1,7 @@
 package com.roman.lv.mullvad;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,9 @@ public class ChromeDriverHelper {
         options.addArguments(
                 "--disable-blink-features",
                 "--disable-blink-features=AutomationControlled",
-                "--no-sandbox");
+                "--no-sandbox",
+                "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36",
+                "--window-size=1920,1080");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("applicationCacheEnabled", false);
         options.merge(desiredCapabilities);

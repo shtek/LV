@@ -52,7 +52,7 @@ public class AvailabilityCheckScheduler {
         this.mullvadVPNService = mullvadVPNService;
     }
 
-    @Scheduled(fixedRate = 120_000L, initialDelay = 5_000L)
+    @Scheduled(fixedRateString = "${scheduler.interval:60000}", initialDelay = 5_000L)
     private void runTask() throws InterruptedException, IOException {
         String proxy = mullvadVPNService.switchProxy();
         if (proxy == null) {
