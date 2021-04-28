@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class MullvadVPNService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MullvadVPNService.class);
-    private static final List<String> BANNED_REGION = List.of("us", "ca", "au", "bg");
+    private static final List<String> BANNED_REGIONS = List.of("us", "ca", "au", "bg", "hu", "it", "pl", "rs");
     private static final int MAX_RETRIES = 10;
 
     private final List<String> proxies = new ArrayList<>();
@@ -38,7 +38,7 @@ public class MullvadVPNService {
             if(matcher.find()) {
                 String region = matcher.group().split("-")[0];
                 String city = matcher.group().split("-")[1];
-                if (!BANNED_REGION.contains(region)) {
+                if (!BANNED_REGIONS.contains(region)) {
                     proxies.add(region + " " + city + " " + matcher.group());
                 }
             }

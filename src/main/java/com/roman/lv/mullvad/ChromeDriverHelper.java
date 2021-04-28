@@ -23,7 +23,7 @@ public class ChromeDriverHelper {
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36",
-                "--window-size=1920,1080");
+                "--window-size=1080,800");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("applicationCacheEnabled", false);
         options.merge(desiredCapabilities);
@@ -31,9 +31,10 @@ public class ChromeDriverHelper {
         ChromeDriver driver = new ChromeDriver(options);
 
         Map<String, Object> params = new HashMap<>();
-        params.put("source", "Object.defineProperty(navigator, 'webdriver', { get: () => undefined })");
+        params.put("source", "Object.defineProperty(navigator, 'webdriver', { get: () => false })");
+        params.put("source", "Object.defineProperty(navigator, 'languages', { get: () => ['en-GB', 'en', 'it'] })");
+        params.put("source", "Object.defineProperty(navigator, 'plugins', { get: () => [0, 1, 2] })");
         driver.executeCdpCommand("Page.addScriptToEvaluateOnNewDocument", params);
-        driver.manage().deleteAllCookies();
         return driver;
     }
 }

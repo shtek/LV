@@ -86,7 +86,7 @@ public class AvailabilityCheckScheduler {
         Map<String, AvailabilityStatus> urlToAvailability = completableFutures.stream()
                 .map(simpleEntryCompletableFuture -> {
                     try {
-                        return simpleEntryCompletableFuture.get(15L, TimeUnit.SECONDS);
+                        return simpleEntryCompletableFuture.get(20L, TimeUnit.SECONDS);
                     } catch (InterruptedException | ExecutionException | TimeoutException e) {
                         return new SimpleEntry<>(simpleEntryCompletableFuture.join().getKey(), AvailabilityStatus.UNKNOWN);
                     }
@@ -109,7 +109,7 @@ public class AvailabilityCheckScheduler {
         if (AvailabilityStatus.ACCESS_DENIED.getWebCode().equalsIgnoreCase(driver.getTitle())) {
             return AvailabilityStatus.ACCESS_DENIED;
         }
-        WebDriverWait wait = new WebDriverWait(driver, 15L);
+        WebDriverWait wait = new WebDriverWait(driver, 20L);
         wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         wait.until(webDriver -> webDriver.findElement(By.className("lv-stock-indicator")));
         List<WebElement> maybeAvailable = driver.findElements(new By.ByClassName("lv-stock-indicator"));
