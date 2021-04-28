@@ -56,7 +56,9 @@ public class LVClientWebClient {
                // System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
             }
           chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
           WebDriver driver = new ChromeDriver(chromeOptions);
+      //  driver.manage().timeouts().
           //WebDriver driver = new FirefoxDriver();
 
         driver.manage().deleteAllCookies();
