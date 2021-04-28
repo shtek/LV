@@ -2,10 +2,7 @@ package com.roman.lv;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -58,12 +55,14 @@ public class LVClientWebClient {
               System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
                // System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
             }
+          chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
           WebDriver driver = new ChromeDriver(chromeOptions);
           //WebDriver driver = new FirefoxDriver();
 
         driver.manage().deleteAllCookies();
             try{
             System.out.println("URL" + url);
+
             driver.get(url);
             By by = new By.ByClassName("lv-stock-indicator");
             WebElement webElement = driver.findElement(by);
