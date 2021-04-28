@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class MullvadVPNService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MullvadVPNService.class);
-    private static final List<String> BANNED_REGIONS = List.of("us", "ca", "au", "bg", "hu", "it", "pl", "rs");
+    private static final List<String> BANNED_REGIONS = List.of("us", "ca", "au", "bg", "hu", "it", "pl", "rs", "ro");
     private static final int MAX_RETRIES = 10;
 
     private final List<String> proxies = new ArrayList<>();

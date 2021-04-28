@@ -23,7 +23,9 @@ public class ChromeDriverHelper {
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36",
-                "--window-size=1080,800");
+                "--window-size=1080,800",
+                "--ignore-certificate-errors",
+                "--test-type=webdriver");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("applicationCacheEnabled", false);
         options.merge(desiredCapabilities);
