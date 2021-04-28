@@ -55,7 +55,7 @@ public class LVClientWebClient {
               System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
                // System.setProperty("webdriver.gecko.driver", "classes/static/Linux/geckodriver");
             }
-          chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+          chromeOptions.setPageLoadStrategy(PageLoadStrategy.EAGER);
           WebDriver driver = new ChromeDriver(chromeOptions);
           //WebDriver driver = new FirefoxDriver();
 
