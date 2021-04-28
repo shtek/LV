@@ -38,7 +38,7 @@ public class ExpressVpn implements  VpnFactory{
                 Process process  =  Runtime.getRuntime().exec("expressvpn connect " + vpnServer);
 
                 //       Process process = Runtime.getRuntime().exec("expressvpn connect " + vpnServer );
-                printResults(process);
+             //   printResults(process);
              System.out.print("prewaiting");
              worked =    process.waitFor(10, TimeUnit.SECONDS);
              System.out.println("after waiting" + worked);
@@ -66,7 +66,7 @@ public class ExpressVpn implements  VpnFactory{
               // Process process = builder.start();
               worked = process.waitFor(10, TimeUnit.SECONDS);
                // Process process = Runtime.getRuntime().exec("expressvpn disconnect");
-               printResults(process);
+              // printResults(process);
            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
