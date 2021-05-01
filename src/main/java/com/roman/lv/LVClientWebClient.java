@@ -70,13 +70,16 @@ public class LVClientWebClient {
             WebElement webElement = driver.findElement(by);
             response = webElement.getText();
 
-            driver.quit();
+
         }
         catch(Exception e){
             e.printStackTrace();
-            driver.quit();
+
 
         }
+            finally {
+                driver.quit();
+            }
         return response;
     }
 }
