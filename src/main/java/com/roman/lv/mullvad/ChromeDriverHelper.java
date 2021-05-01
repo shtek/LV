@@ -37,7 +37,7 @@ public class ChromeDriverHelper {
         params.put("source", "Object.defineProperty(navigator, 'webdriver', { get: () => false })");
         params.put("source", "Object.defineProperty(navigator, 'languages', { get: () => ['en-GB', 'en', 'it'] })");
         params.put("source", "Object.defineProperty(navigator, 'plugins', { get: () => [0, 1, 2] })");
-        driver.executeCdpCommand("Page.addScriptToEvaluateOnNewDocument", params);
+       // driver.executeCdpCommand("Page.addScriptToEvaluateOnNewDocument", params);
         return driver;
     }
 }
