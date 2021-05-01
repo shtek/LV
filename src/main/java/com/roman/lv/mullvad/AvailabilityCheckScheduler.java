@@ -57,7 +57,7 @@ public class AvailabilityCheckScheduler {
         String proxy = mullvadVPNService.switchProxy();
         if (proxy == null) {
             mullvadVPNService.updateAvailableProxies();
-            return;
+            //return;
         }
         List<CompletableFuture<SimpleEntry<String, AvailabilityStatus>>> completableFutures = loadResourceConfig.getItems().stream()
                 .parallel()
