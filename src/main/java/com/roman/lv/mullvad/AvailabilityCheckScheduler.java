@@ -44,7 +44,7 @@ public class AvailabilityCheckScheduler {
 
     public AvailabilityCheckScheduler(
             LoadResourceConfig loadResourceConfig,
-            @Qualifier("mockedEmailService") EmailService emailService,
+            EmailService emailService,
             MullvadVPNService mullvadVPNService) {
         this.loadResourceConfig = loadResourceConfig;
         this.executorService = Executors.newFixedThreadPool(loadResourceConfig.getItems().size());
