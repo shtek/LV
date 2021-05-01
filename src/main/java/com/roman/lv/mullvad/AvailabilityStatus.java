@@ -2,7 +2,7 @@ package com.roman.lv.mullvad;
 
 public enum AvailabilityStatus {
 
-    IN_STOCK("in stock"), OUT_OF_STOCK("out of stock"), UNKNOWN(""), INFORMATION_NOT_AVAILABLE("information not available"), ACCESS_DENIED("access denied");
+    IN_STOCK("in stock"), OUT_OF_STOCK("out of stock"), UNKNOWN(""), INFORMATION_NOT_AVAILABLE("information not available"), ACCESS_DENIED("access denied"), AVAILABLE("available"), NOT_AVAILABLE("not available");
 
     private final String webCode;
 

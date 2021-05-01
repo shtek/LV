@@ -99,7 +99,7 @@ public class AvailabilityCheckScheduler {
                 .forEach(entry -> LOGGER.error("{} Failed for {} with reason: {}", proxy, RomanStringUtils.getURL(entry.getKey()), entry.getValue().name()));
 
         urlToAvailability.entrySet().stream()
-                .filter(status -> status.getValue().equals(AvailabilityStatus.IN_STOCK))
+                .filter(status -> (status.getValue().equals(AvailabilityStatus.IN_STOCK) || status.getValue().equals(AvailabilityStatus.AVAILABLE)))
                 .forEach(entry -> emailService.sendSimpleMessage(
                         RomanStringUtils.getURL(entry.getKey()),
                         RomanStringUtils.getEmails(entry.getKey())));
