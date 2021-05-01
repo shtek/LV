@@ -16,7 +16,7 @@ public class ChromeDriverHelper {
     public static ChromeDriver build() {
         String driverPath = new File(LVApplication.class.getClassLoader().getResource("static/Linux/chromedriver").getFile()).getAbsolutePath();
 
-        System.setProperty("webdriver.chrome.driver", "static/Linux/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments(
