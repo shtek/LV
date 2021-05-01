@@ -16,6 +16,8 @@ public enum AvailabilityStatus {
             case "out of stock": return OUT_OF_STOCK;
             case "access denied": return ACCESS_DENIED;
             case "information not available": return INFORMATION_NOT_AVAILABLE;
+            case "available":return  AVAILABLE;
+            case "not available":return NOT_AVAILABLE;
             default: return UNKNOWN;
         }
     }
