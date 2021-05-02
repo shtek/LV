@@ -47,7 +47,8 @@ public class AvailabilityCheckScheduler {
             EmailService emailService,
             MullvadVPNService mullvadVPNService) {
         this.loadResourceConfig = loadResourceConfig;
-        this.executorService = Executors.newFixedThreadPool(loadResourceConfig.getItems().size());
+       // this.executorService = Executors.newFixedThreadPool(loadResourceConfig.getItems().size());
+        this.executorService = Executors.newFixedThreadPool(1);
         this.emailService = emailService;
         this.mullvadVPNService = mullvadVPNService;
     }
