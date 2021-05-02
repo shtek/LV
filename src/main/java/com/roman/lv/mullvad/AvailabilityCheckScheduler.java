@@ -7,12 +7,8 @@ import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.Set;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -60,6 +56,7 @@ public class AvailabilityCheckScheduler {
             mullvadVPNService.updateAvailableProxies();
             //return;
         }
+        Set<String> remove =  ConcurrentHashMap.newKeySet();
         List<CompletableFuture<SimpleEntry<String, AvailabilityStatus>>> completableFutures = loadResourceConfig.getItems().stream()
                 .parallel()
                 .map(item -> supplyAsync(() -> {
@@ -101,9 +98,16 @@ public class AvailabilityCheckScheduler {
 
         urlToAvailability.entrySet().stream()
                 .filter(status -> (status.getValue().equals(AvailabilityStatus.IN_STOCK) || status.getValue().equals(AvailabilityStatus.AVAILABLE)))
-                .forEach(entry -> emailService.sendSimpleMessage(
-                        RomanStringUtils.getURL(entry.getKey()),
-                        RomanStringUtils.getEmails(entry.getKey())));
+                .forEach(entry -> {
+                            emailService.sendSimpleMessage(
+                                    RomanStringUtils.getURL(entry.getKey()),
+                                    RomanStringUtils.getEmails(entry.getKey()));
+                            remove.add(entry.getKey());
+                        }
+                );
+        if( remove != null)
+            loadResourceConfig.removeItems(remove);
+
     }
 
     private AvailabilityStatus checkAvailability(ChromeDriver driver) {
