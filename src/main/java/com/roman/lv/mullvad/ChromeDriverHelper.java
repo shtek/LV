@@ -1,23 +1,22 @@
 package com.roman.lv.mullvad;
 
+import static org.apache.commons.io.FileUtils.copyURLToFile;
+
 import java.io.File;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.net.URL;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import com.roman.lv.LVApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChromeDriverHelper {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(ChromeDriverHelper.class);
+
     public static ChromeDriver build() {
-        String driverPath = new File(LVApplication.class.getClassLoader().getResource("static/Linux/chromedriver").getFile()).getAbsolutePath();
-
-        System.setProperty("webdriver.chrome.driver", "classes/static/Linux/chromedriver");
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments(
                 "--disable-blink-features",
@@ -31,13 +30,23 @@ public class ChromeDriverHelper {
         desiredCapabilities.setCapability("applicationCacheEnabled", false);
         options.merge(desiredCapabilities);
 
-        ChromeDriver driver = new ChromeDriver(options);
+        return new ChromeDriver(options);
+    }
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("source", "Object.defineProperty(navigator, 'webdriver', { get: () => false })");
-        params.put("source", "Object.defineProperty(navigator, 'languages', { get: () => ['en-GB', 'en', 'it'] })");
-        params.put("source", "Object.defineProperty(navigator, 'plugins', { get: () => [0, 1, 2] })");
-       // driver.executeCdpCommand("Page.addScriptToEvaluateOnNewDocument", params);
-        return driver;
+    public static void prepareDriver() throws IOException {
+        LOGGER.info("Preparing Chrome driver");
+        ClassLoader classLoader = ChromeDriverHelper.class.getClassLoader();
+        URL resource = classLoader.getResource("static/Linux/chromedriver");
+        File f = new File("driver");
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        File chromeDriver = new File("driver" + File.separator + "chromedriver");
+        if (!chromeDriver.exists()) {
+            chromeDriver.createNewFile();
+            copyURLToFile(resource, chromeDriver);
+        }
+        Runtime.getRuntime().exec("chmod u+x "+ chromeDriver.getAbsolutePath());
+        System.setProperty("webdriver.chrome.driver", chromeDriver.getAbsolutePath());
     }
 }

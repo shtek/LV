@@ -55,4 +55,8 @@ public class LoadResourceConfig {
         items.removeAll(set);
     }
 
+    public void removeItem(String set){
+        items.remove(set);
+    }
+
 }

@@ -41,12 +41,13 @@ public class AvailabilityCheckScheduler {
     public AvailabilityCheckScheduler(
             LoadResourceConfig loadResourceConfig,
             EmailService emailService,
-            MullvadVPNService mullvadVPNService) {
+            MullvadVPNService mullvadVPNService) throws IOException {
         this.loadResourceConfig = loadResourceConfig;
-       // this.executorService = Executors.newFixedThreadPool(loadResourceConfig.getItems().size());
+        //this.executorService = Executors.newFixedThreadPool(loadResourceConfig.getItems().size());
         this.executorService = Executors.newFixedThreadPool(1);
         this.emailService = emailService;
         this.mullvadVPNService = mullvadVPNService;
+        ChromeDriverHelper.prepareDriver();
     }
 
     @Scheduled(fixedRateString = "${scheduler.interval:60000}", initialDelay = 5_000L)
@@ -54,9 +55,8 @@ public class AvailabilityCheckScheduler {
         String proxy = mullvadVPNService.switchProxy();
         if (proxy == null) {
             mullvadVPNService.updateAvailableProxies();
-            //return;
+            return;
         }
-        Set<String> remove =  ConcurrentHashMap.newKeySet();
         List<CompletableFuture<SimpleEntry<String, AvailabilityStatus>>> completableFutures = loadResourceConfig.getItems().stream()
                 .parallel()
                 .map(item -> supplyAsync(() -> {
@@ -82,19 +82,14 @@ public class AvailabilityCheckScheduler {
                 .collect(Collectors.toList());
 
         Map<String, AvailabilityStatus> urlToAvailability = completableFutures.stream()
-                .map(simpleEntryCompletableFuture -> {
-                    try {
-                        return simpleEntryCompletableFuture.get(20L, TimeUnit.SECONDS);
-                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                        return new SimpleEntry<>(simpleEntryCompletableFuture.join().getKey(), AvailabilityStatus.UNKNOWN);
-                    }
-                }).collect(toMap(SimpleEntry::getKey, SimpleEntry::getValue));
+                .map(CompletableFuture::join)
+                .collect(toMap(SimpleEntry::getKey, SimpleEntry::getValue));
 
         urlToAvailability.entrySet().stream()
                 .filter(status -> status.getValue().equals(AvailabilityStatus.UNKNOWN)
                         || status.getValue().equals(AvailabilityStatus.INFORMATION_NOT_AVAILABLE)
                         || status.getValue().equals(AvailabilityStatus.ACCESS_DENIED))
-                .forEach(entry -> LOGGER.error("{} Failed for {} with reason: {}", proxy, RomanStringUtils.getURL(entry.getKey()), entry.getValue().name()));
+                .forEach(entry -> LOGGER.warn("{} Failed for {} with reason: {}", proxy, RomanStringUtils.getURL(entry.getKey()), entry.getValue().name()));
 
         urlToAvailability.entrySet().stream()
                 .filter(status -> (status.getValue().equals(AvailabilityStatus.IN_STOCK) || status.getValue().equals(AvailabilityStatus.AVAILABLE)))
@@ -102,12 +97,9 @@ public class AvailabilityCheckScheduler {
                             emailService.sendSimpleMessage(
                                     RomanStringUtils.getURL(entry.getKey()),
                                     RomanStringUtils.getEmails(entry.getKey()));
-                            remove.add(entry.getKey());
+                            loadResourceConfig.removeItem(entry.getKey());
                         }
                 );
-        if( remove != null)
-            loadResourceConfig.removeItems(remove);
-
     }
 
     private AvailabilityStatus checkAvailability(ChromeDriver driver) {
@@ -115,13 +107,14 @@ public class AvailabilityCheckScheduler {
             return AvailabilityStatus.ACCESS_DENIED;
         }
         WebDriverWait wait = new WebDriverWait(driver, 20L);
-        wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         wait.until(webDriver -> webDriver.findElement(By.className("lv-stock-indicator")));
         List<WebElement> maybeAvailable = driver.findElements(new By.ByClassName("lv-stock-indicator"));
 
         return maybeAvailable.stream()
                 .map(webElement -> AvailabilityStatus.fromWebCode(webElement.getText().toLowerCase()))
-                .filter(availability -> availability.equals(AvailabilityStatus.IN_STOCK) || availability.equals(AvailabilityStatus.OUT_OF_STOCK))
+                .filter(availability -> availability.equals(AvailabilityStatus.IN_STOCK)
+                        || availability.equals(AvailabilityStatus.AVAILABLE)
+                        || availability.equals(AvailabilityStatus.OUT_OF_STOCK))
                 .findFirst()
                 .orElse(AvailabilityStatus.INFORMATION_NOT_AVAILABLE);
     }
