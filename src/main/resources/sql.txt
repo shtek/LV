@@ -1,0 +1,21 @@
+create db lvdb;
+
+create table if not exists users(
+user_id int AUTO_INCREMENT PRIMARY KEY,
+email VARCHAR(255) NOT NULL
+);
+create table if not exists products(
+product_id int AUTO_INCREMENT PRIMARY KEY,
+url VARCHAR(255) NOT NULL);
+
+create table if not exists subscriptions(
+product_id int,
+user_id int,
+PRIMARY KEY (product_id , user_id),
+FOREIGN KEY (product_id)
+        REFERENCES products (product_id),
+
+FOREIGN KEY (user_id)
+        REFERENCES users (user_id));
+create user 'springuser'@'%' identified by 'ThePassword';
+grant all on lvdb.* to 'springuser'@'%';
