@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 public class RomanStringUtilsTest {
-    @Test
+   // @Test
     public void testUtils(){
         String input = "https://us.louisvuitton.com/eng-us/products/pochette-accessoires-monogram-005656DIVIDERchristinajoybrown@gmail.comSPLITTER";
         String url = RomanStringUtils.getURL(input);

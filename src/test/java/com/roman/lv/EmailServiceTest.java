@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class EmailServiceTest {
     @Autowired
     EmailService emailService;
-   // @Test
+    @Test
     public void testEmail()
     {
         String [] arr = {"magicroman@gmail.com","olapidu@gmail.com"};
