@@ -1,6 +1,7 @@
 package com.roman.lv;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +15,7 @@ public class LiveMonitor {
     public static long bytesToMegabytes(long bytes) {
         return bytes / MEGABYTE;
     }
-    @RequestMapping("/alive")
+    @GetMapping("/alive")
     public String liveness2() {
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalTime localTime = localDateTime.toLocalTime();

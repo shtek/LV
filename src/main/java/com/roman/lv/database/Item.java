@@ -3,7 +3,6 @@ package com.roman.lv.database;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,7 @@ public class Item {
     private String url;
 
     @OneToMany(mappedBy = "item")
-    private Set<Subscription> subscritions;
+    private Set<Subscription> subscriptions;
     public Integer getId() {
         return id;
     }
@@ -32,11 +31,15 @@ public class Item {
         this.url = url;
     }
 
-    public Set<Subscription> getSubscritions() {
-        return subscritions;
+    public Set<Subscription> getSubscriptions() {
+        return subscriptions;
     }
 
-    public void setSubscritions(Set<Subscription> subscritions) {
-        this.subscritions = subscritions;
+    public void setSubscriptions(Set<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public Item(String url) {
+        this.url = url;
     }
 }

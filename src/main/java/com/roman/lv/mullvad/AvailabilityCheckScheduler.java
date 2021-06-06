@@ -27,7 +27,7 @@ import com.roman.lv.EmailService;
 import com.roman.lv.LoadResourceConfig;
 import com.roman.lv.RomanStringUtils;
 
-//@Component
+@Component
 @ConditionalOnProperty(value = "vpn.mullvad")
 public class AvailabilityCheckScheduler {
 

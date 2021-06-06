@@ -19,6 +19,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<Subscription> subscriptions;
 
+    public Customer(String email) {
+        this.email = email;
+    }
+
     public Set<Subscription> getSubscriptions() {
         return subscriptions;
     }
