@@ -42,4 +42,8 @@ public class Item {
     public Item(String url) {
         this.url = url;
     }
+    public Item(){
+
+    }
+
 }

@@ -62,7 +62,14 @@ public class DAO {
            subscription.setCustomer(customer);
            subscription.setActive(true);
            subscription.setExpiryDate(LocalDate.now().plusMonths(1L));
-            Subscription subscription2 = subscriptionRepository.save(subscription);
+
+           System.out.println("subs" + subscription.getCustomer().getId());
+           System.out.println("subs" + subscription.getItem().getUrl());
+             System.out.println("subs" + subscription.getExpiryDate());
+             System.out.println("subs" + subscription.isActive());
+
+             Subscription subscription2 = subscriptionRepository.save(subscription);
+
           // item.getSubscriptions().add(subscription);
           // itemRepository.save(item);
          //  customer.getSubscriptions().add(subscription);

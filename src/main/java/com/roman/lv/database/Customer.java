@@ -22,7 +22,9 @@ public class Customer {
     public Customer(String email) {
         this.email = email;
     }
+    public Customer(){
 
+    }
     public Set<Subscription> getSubscriptions() {
         return subscriptions;
     }
